@@ -21,9 +21,9 @@ fun main() {
         } else if (opcion == 5) {
             mostrarSobrePromedio()
         } else if (opcion == 6) {
-            println("\nFinalizando el sistema. Hasta pronto!")
+            println("\nEl torneo ha terminado. Hasta la proxima batalla, peleadores!")
         } else {
-            println("\nOpcion no valida. Intente nuevamente.")
+            println("\nMovimiento no valido. Elige una opcion del menu.")
         }
     }
 }
@@ -32,13 +32,13 @@ fun mostrarMenu() {
     println("\n=====================================")
     println("     BIENVENIDO AL TORNEO KOF")
     println("=====================================")
-    println("1. Registrar participante")
-    println("2. Registrar puntos")
-    println("3. Consultar participante")
+    println("1. Registrar peleador")
+    println("2. Registrar puntos de batalla")
+    println("3. Consultar peleador")
     println("4. Mostrar estadisticas del torneo")
-    println("5. Mostrar participantes sobre el promedio")
-    println("6. Finalizar programa")
-    print("Seleccione una opcion: ")
+    println("5. Mostrar peleadores sobre el promedio")
+    println("6. Finalizar torneo")
+    print("Elige tu opcion: ")
 }
 
 fun leerOpcion(): Int {
@@ -64,43 +64,43 @@ fun buscarParticipante(nombre: String): Int {
 }
 
 fun registrarParticipante() {
-    print("\nIngrese el nombre del participante: ")
+    print("\nIngrese el nombre del peleador: ")
     val entrada = readLine()
     val nombre = entrada?.trim() ?: ""
 
     if (nombre == "") {
-        println("Error: el nombre no puede estar vacio.")
+        println("Error: el nombre del peleador no puede estar vacio.")
         return
     }
 
     if (buscarParticipante(nombre) != -1) {
-        println("Error: el participante '" + nombre + "' ya esta registrado.")
+        println("Error: el peleador '" + nombre + "' ya esta inscrito en el torneo.")
         return
     }
 
     nombres[cantidad] = nombre
     puntos[cantidad] = 0
     cantidad = cantidad + 1
-    println("Participante '" + nombre + "' registrado correctamente.")
+    println("Peleador '" + nombre + "' inscrito en el torneo. Que comience la batalla!")
 }
 
 fun registrarPuntos() {
     if (cantidad == 0) {
-        println("\nNo hay participantes registrados.")
+        println("\nAun no hay peleadores en el torneo.")
         return
     }
 
-    print("\nIngrese el nombre del participante: ")
+    print("\nIngrese el nombre del peleador: ")
     val entrada = readLine()
     val nombre = entrada?.trim() ?: ""
 
     val posicion = buscarParticipante(nombre)
     if (posicion == -1) {
-        println("Error: el participante '" + nombre + "' no existe.")
+        println("Error: el peleador '" + nombre + "' no esta inscrito.")
         return
     }
 
-    print("Ingrese los puntos a registrar: ")
+    print("Ingrese los puntos de batalla obtenidos: ")
     val entradaPuntos = readLine()
     val nuevosPuntos = entradaPuntos?.trim()?.toIntOrNull()
 
@@ -110,35 +110,35 @@ fun registrarPuntos() {
     }
 
     puntos[posicion] = puntos[posicion] + nuevosPuntos
-    println("Se registraron " + nuevosPuntos + " puntos a '" + nombres[posicion] + "'.")
+    println("Victoria! Se sumaron " + nuevosPuntos + " puntos a '" + nombres[posicion] + "'.")
     println("Total acumulado: " + puntos[posicion] + " puntos.")
 }
 
 fun consultarParticipante() {
     if (cantidad == 0) {
-        println("\nNo hay participantes registrados.")
+        println("\nAun no hay peleadores en el torneo.")
         return
     }
 
-    print("\nIngrese el nombre del participante: ")
+    print("\nIngrese el nombre del peleador: ")
     val entrada = readLine()
     val nombre = entrada?.trim() ?: ""
 
     val posicion = buscarParticipante(nombre)
     if (posicion == -1) {
-        println("Error: el participante '" + nombre + "' no existe.")
+        println("Error: el peleador '" + nombre + "' no esta inscrito.")
         return
     }
 
-    println("\n--- Informacion del participante ---")
+    println("\n--- Ficha del peleador ---")
     println("Nombre: " + nombres[posicion])
-    println("Total de puntos: " + puntos[posicion])
-    println("Categoria: " + obtenerCategoria(puntos[posicion]))
+    println("Puntos de batalla: " + puntos[posicion])
+    println("Rango: " + obtenerCategoria(puntos[posicion]))
 }
 
 fun mostrarEstadisticas() {
     if (cantidad == 0) {
-        println("\nNo hay participantes registrados.")
+        println("\nAun no hay peleadores en el torneo.")
         return
     }
 
@@ -160,12 +160,12 @@ fun mostrarEstadisticas() {
         }
     }
 
-    println("\n--- Estadisticas del torneo ---")
-    println("Cantidad total de participantes: " + cantidad)
-    println("Total de puntos acumulados: " + totalPuntos)
-    println("Promedio de puntos por participante: " + "%.2f".format(promedio))
-    println("Mayor puntuacion: " + nombres[posMayor] + " (" + puntos[posMayor] + " puntos)")
-    println("Menor puntuacion: " + nombres[posMenor] + " (" + puntos[posMenor] + " puntos)")
+    println("\n--- Estadisticas del torneo KOF ---")
+    println("Total de peleadores: " + cantidad)
+    println("Puntos totales del torneo: " + totalPuntos)
+    println("Promedio de puntos por peleador: " + "%.2f".format(promedio))
+    println("Campeon actual: " + nombres[posMayor] + " (" + puntos[posMayor] + " puntos)")
+    println("Peleador con menos puntos: " + nombres[posMenor] + " (" + puntos[posMenor] + " puntos)")
 
     var leyendas = 0
     var expertos = 0
@@ -184,7 +184,7 @@ fun mostrarEstadisticas() {
         }
     }
 
-    println("\nParticipantes por categoria:")
+    println("\nPeleadores por rango:")
     println("  Leyenda: " + leyendas)
     println("  Experto: " + expertos)
     println("  Competidor: " + competidores)
@@ -193,7 +193,7 @@ fun mostrarEstadisticas() {
 
 fun mostrarSobrePromedio() {
     if (cantidad == 0) {
-        println("\nNo hay participantes registrados.")
+        println("\nAun no hay peleadores en el torneo.")
         return
     }
 
@@ -203,7 +203,7 @@ fun mostrarSobrePromedio() {
     }
     val promedio = totalPuntos.toDouble() / cantidad
 
-    println("\n--- Participantes sobre el promedio (" + "%.2f".format(promedio) + ") ---")
+    println("\n--- Peleadores de elite (sobre el promedio de " + "%.2f".format(promedio) + ") ---")
     var hayDestacados = false
     for (i in 0 until cantidad) {
         if (puntos[i] > promedio) {
@@ -212,7 +212,7 @@ fun mostrarSobrePromedio() {
         }
     }
     if (!hayDestacados) {
-        println("Ningun participante supera el promedio general.")
+        println("Ningun peleador supera el promedio general.")
     }
 }
 
